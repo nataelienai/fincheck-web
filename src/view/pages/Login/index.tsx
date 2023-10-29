@@ -4,7 +4,7 @@ import { Input } from '../../components/Input';
 import { useLoginController } from './useLoginController';
 
 export function Login() {
-  const { handleSubmit, register, errors } = useLoginController();
+  const { handleSubmit, register, errors, isLoading } = useLoginController();
 
   const hasErrors = Boolean(errors.email || errors.password);
 
@@ -47,7 +47,12 @@ export function Login() {
           {...register('password')}
         />
 
-        <Button type="submit" className="mt-2" disabled={hasErrors}>
+        <Button
+          type="submit"
+          className="mt-2"
+          disabled={hasErrors}
+          isLoading={isLoading}
+        >
           Entrar
         </Button>
       </form>
