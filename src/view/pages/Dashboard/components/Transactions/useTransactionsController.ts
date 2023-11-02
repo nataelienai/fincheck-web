@@ -12,6 +12,8 @@ export function useTransactionsController() {
     sliderPosition,
     setSliderPosition,
     areValuesVisible,
-    isLoading: false,
+    isInitialLoading: false,
+    isLoadingTransactions: false,
+    transactions: [],
   };
 }
