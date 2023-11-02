@@ -6,6 +6,7 @@ import { AccountCard } from './AccountCard';
 import { AccountsSliderNavigation } from './AccountsSliderNavigation';
 import { useAccountsController } from './useAccountsController';
 
+import { PlusIcon } from '@radix-ui/react-icons';
 import 'swiper/css';
 import { cn } from '../../../../../app/utils/cn';
 import { formatCurrency } from '../../../../../app/utils/formatCurrency';
@@ -19,6 +20,7 @@ export function Accounts() {
     areValuesVisible,
     toggleValuesVisibility,
     isLoading,
+    accounts,
   } = useAccountsController();
 
   return (
@@ -56,60 +58,81 @@ export function Accounts() {
           </div>
 
           <div className="flex-1 flex flex-col justify-end">
-            {/* Swiper bugs when its parent is flex */}
-            <div>
-              <Swiper
-                spaceBetween={16}
-                slidesPerView={windowWidth > 500 ? 2.1 : 1.2}
-                onSlideChange={(swiper) => {
-                  setSliderPosition({
-                    isBeginning: swiper.isBeginning,
-                    isEnd: swiper.isEnd,
-                  });
-                }}
-              >
-                <div
-                  className="flex items-center justify-between mb-4"
-                  slot="container-start"
-                >
+            {accounts.length === 0 && (
+              <>
+                <div className="mb-4 py-3">
                   <strong className="text-white text-lg leading-6 tracking-[-1px] font-bold">
                     Minhas Contas
                   </strong>
-
-                  <AccountsSliderNavigation
-                    isBeginning={sliderPosition.isBeginning}
-                    isEnd={sliderPosition.isEnd}
-                  />
                 </div>
 
-                <SwiperSlide>
-                  <AccountCard
-                    color="#7950F2"
-                    name="Nubank"
-                    balance={1000}
-                    type="CHECKING"
-                  />
-                </SwiperSlide>
+                <button className="h-52 p-4 border-2 border-dotted border-teal-600 rounded-2xl flex flex-col items-center justify-center gap-4 text-white">
+                  <div className="w-11 h-11 rounded-full border-2 border-dotted border-white flex items-center justify-center">
+                    <PlusIcon className="w-6 h-6" />
+                  </div>
+                  <span className="tracking-[-0.5px] font-medium block w-32 text-center">
+                    Cadastre uma nova conta
+                  </span>
+                </button>
+              </>
+            )}
 
-                <SwiperSlide>
-                  <AccountCard
-                    color="#333"
-                    name="XP"
-                    balance={1000}
-                    type="INVESTMENT"
-                  />
-                </SwiperSlide>
+            {accounts.length > 0 && (
+              // Swiper bugs when its parent is flex
+              <div>
+                <Swiper
+                  spaceBetween={16}
+                  slidesPerView={windowWidth > 500 ? 2.1 : 1.2}
+                  onSlideChange={(swiper) => {
+                    setSliderPosition({
+                      isBeginning: swiper.isBeginning,
+                      isEnd: swiper.isEnd,
+                    });
+                  }}
+                >
+                  <div
+                    className="flex items-center justify-between mb-4"
+                    slot="container-start"
+                  >
+                    <strong className="text-white text-lg leading-6 tracking-[-1px] font-bold">
+                      Minhas Contas
+                    </strong>
 
-                <SwiperSlide>
-                  <AccountCard
-                    color="#0f0"
-                    name="Carteira"
-                    balance={1000}
-                    type="CASH"
-                  />
-                </SwiperSlide>
-              </Swiper>
-            </div>
+                    <AccountsSliderNavigation
+                      isBeginning={sliderPosition.isBeginning}
+                      isEnd={sliderPosition.isEnd}
+                    />
+                  </div>
+
+                  <SwiperSlide>
+                    <AccountCard
+                      color="#7950F2"
+                      name="Nubank"
+                      balance={1000}
+                      type="CHECKING"
+                    />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                    <AccountCard
+                      color="#333"
+                      name="XP"
+                      balance={1000}
+                      type="INVESTMENT"
+                    />
+                  </SwiperSlide>
+
+                  <SwiperSlide>
+                    <AccountCard
+                      color="#0f0"
+                      name="Carteira"
+                      balance={1000}
+                      type="CASH"
+                    />
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            )}
           </div>
         </>
       )}
