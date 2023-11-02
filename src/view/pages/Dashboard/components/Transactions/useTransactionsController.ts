@@ -8,5 +8,10 @@ export function useTransactionsController() {
   });
   const { areValuesVisible } = useDashboard();
 
-  return { sliderPosition, setSliderPosition, areValuesVisible };
+  return {
+    sliderPosition,
+    setSliderPosition,
+    areValuesVisible,
+    isLoading: false,
+  };
 }
