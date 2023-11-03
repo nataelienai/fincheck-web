@@ -6,7 +6,16 @@ export function useTransactionsController() {
     isBeginning: true,
     isEnd: false,
   });
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(true);
   const { areValuesVisible } = useDashboard();
+
+  function handleOpenFiltersModal() {
+    setIsFiltersModalOpen(true);
+  }
+
+  function handleCloseFiltersModal() {
+    setIsFiltersModalOpen(false);
+  }
 
   return {
     sliderPosition,
@@ -15,5 +24,8 @@ export function useTransactionsController() {
     isInitialLoading: false,
     isLoadingTransactions: false,
     transactions: [],
+    isFiltersModalOpen,
+    handleOpenFiltersModal,
+    handleCloseFiltersModal,
   };
 }
