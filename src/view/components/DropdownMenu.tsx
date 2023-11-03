@@ -26,7 +26,7 @@ function DropdownMenuContent({
     <RadixDropdownMenu.Portal>
       <RadixDropdownMenu.Content
         className={cn(
-          'bg-white p-2 rounded-2xl space-y-2 shadow-[0px_11px_20px_0px_rgb(0,0,0,0.1)] data-[side=bottom]:animate-slide-up-and-fade z-50',
+          'bg-white p-2 rounded-2xl space-y-2 shadow-[0px_11px_20px_0px_rgb(0,0,0,0.1)] data-[side=bottom]:animate-slide-up-and-fade data-[side=top]:animate-slide-down-and-fade z-50',
           className,
         )}
       >
