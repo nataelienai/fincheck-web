@@ -26,7 +26,7 @@ function DropdownMenuContent({
     <RadixDropdownMenu.Portal>
       <RadixDropdownMenu.Content
         className={cn(
-          'bg-white p-2 rounded-2xl space-y-2 shadow-[0px_11px_20px_0px_rgb(0,0,0,0.1)] data-[side=bottom]:animate-slide-up-and-fade',
+          'bg-white p-2 rounded-2xl space-y-2 shadow-[0px_11px_20px_0px_rgb(0,0,0,0.1)] data-[side=bottom]:animate-slide-up-and-fade z-50',
           className,
         )}
       >
@@ -50,7 +50,7 @@ function DropdownMenuItem({
   return (
     <RadixDropdownMenu.Item
       className={cn(
-        'min-h-[48px] outline-none flex items-center p-4 text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer',
+        'min-h-[48px] outline-none flex items-center p-2 text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer',
         className,
       )}
       onSelect={onSelect}
