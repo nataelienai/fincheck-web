@@ -1,12 +1,18 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import { localStorageKeys } from '../../../../../app/config/localStorageKeys';
 
+type TransactionType = 'INCOME' | 'EXPENSE';
+
 interface DashboardContextValue {
   areValuesVisible: boolean;
   isNewAccountModalOpen: boolean;
+  isNewTransactionModalOpen: boolean;
+  newTransactionType: TransactionType | null;
   toggleValuesVisibility: () => void;
   openNewAccountModal: () => void;
   closeNewAccountModal: () => void;
+  openNewTransactionModal: (type: TransactionType) => void;
+  closeNewTransactionModal: () => void;
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
@@ -19,7 +25,11 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
     return storedValue !== 'false';
   });
-  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(true);
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
+    useState(false);
+  const [newTransactionType, setNewTransactionType] =
+    useState<TransactionType | null>(null);
 
   useEffect(() => {
     localStorage.setItem(
@@ -40,14 +50,28 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     setIsNewAccountModalOpen(false);
   }, []);
 
+  const openNewTransactionModal = useCallback((type: TransactionType) => {
+    setNewTransactionType(type);
+    setIsNewTransactionModalOpen(true);
+  }, []);
+
+  const closeNewTransactionModal = useCallback(() => {
+    setNewTransactionType(null);
+    setIsNewTransactionModalOpen(false);
+  }, []);
+
   return (
     <DashboardContext.Provider
       value={{
         areValuesVisible,
-        toggleValuesVisibility,
         isNewAccountModalOpen,
+        isNewTransactionModalOpen,
+        newTransactionType,
+        toggleValuesVisibility,
         openNewAccountModal,
         closeNewAccountModal,
+        openNewTransactionModal,
+        closeNewTransactionModal,
       }}
     >
       {children}
