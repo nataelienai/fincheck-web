@@ -6,7 +6,7 @@ export function useTransactionsController() {
     isBeginning: true,
     isEnd: false,
   });
-  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(true);
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const { areValuesVisible } = useDashboard();
 
   function handleOpenFiltersModal() {
