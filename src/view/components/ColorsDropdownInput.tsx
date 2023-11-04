@@ -7,6 +7,8 @@ import { ColorIcon } from './icons/ColorIcon';
 
 interface ColorsDropdownInputProps {
   error?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 type Color = {
@@ -32,11 +34,22 @@ const colors: Color[] = [
   { color: '#FFFFFF', bg: '#DEE2E6' },
 ];
 
-export function ColorsDropdownInput({ error }: ColorsDropdownInputProps) {
-  const [selectedColor, setSelectedColor] = useState<Color | null>(null);
+export function ColorsDropdownInput({
+  error,
+  value,
+  onChange,
+}: ColorsDropdownInputProps) {
+  const [selectedColor, setSelectedColor] = useState<Color | null>(() => {
+    if (!value) {
+      return null;
+    }
+
+    return colors.find(({ color }) => color === value) ?? null;
+  });
 
   function handleSelectColor(color: Color) {
     setSelectedColor(color);
+    onChange?.(color.color);
   }
 
   return (
