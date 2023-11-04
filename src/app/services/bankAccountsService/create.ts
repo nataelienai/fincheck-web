@@ -1,6 +1,6 @@
 import { httpClient } from '../httpClient';
 
-export interface BankAccountParams {
+interface BankAccountParams {
   name: string;
   initialBalance: number;
   color: string;
