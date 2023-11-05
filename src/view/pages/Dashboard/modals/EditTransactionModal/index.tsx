@@ -3,9 +3,11 @@ import { Transaction } from '../../../../../app/entities/Transaction';
 import { Button } from '../../../../components/Button';
 import { CurrencyInput } from '../../../../components/CurrencyInput';
 import { DatePickerInput } from '../../../../components/DatePickerInput';
+import { DeleteConfirmationModal } from '../../../../components/DeleteConfirmationModal';
 import { Input } from '../../../../components/Input';
 import { Modal } from '../../../../components/Modal';
 import { Select } from '../../../../components/Select';
+import { TrashIcon } from '../../../../components/icons/TrashIcon';
 import { useEditTransactionModalController } from './useEditTransactionModalController';
 
 interface EditTransactionModalProps {
@@ -26,16 +28,41 @@ export function EditTransactionModal({
     register,
     accounts,
     categories,
-    isLoading,
+    isUpdatePending,
+    isRemovalPending,
+    isDeleteModalOpen,
+    handleDeleteTransaction,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
   } = useEditTransactionModalController(transaction, onClose);
 
-  const isExpense = transaction?.type === 'EXPENSE';
+  const isExpense = transaction.type === 'EXPENSE';
+
+  if (isDeleteModalOpen) {
+    const title = `Tem certeza que deseja excluir esta ${
+      isExpense ? 'despesa' : 'receita'
+    }?`;
+
+    return (
+      <DeleteConfirmationModal
+        isLoading={isRemovalPending}
+        onConfirm={handleDeleteTransaction}
+        onCancel={handleCloseDeleteModal}
+        title={title}
+      />
+    );
+  }
 
   return (
     <Modal
       title={isExpense ? 'Editar Despesa' : 'Editar Receita'}
       open={open}
       onClose={onClose}
+      rightAction={
+        <button className="w-12 h-12 p-3" onClick={handleOpenDeleteModal}>
+          <TrashIcon className="w-6 h-6 text-red-900" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div>
@@ -111,7 +138,11 @@ export function EditTransactionModal({
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
+        <Button
+          type="submit"
+          className="w-full mt-6"
+          isLoading={isUpdatePending}
+        >
           Salvar
         </Button>
       </form>

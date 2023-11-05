@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
@@ -48,13 +48,21 @@ export function useEditTransactionModalController(
 
   const queryClient = useQueryClient();
 
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: transactionsService.update,
-  });
+  const { isPending: isUpdatePending, mutateAsync: updateTransaction } =
+    useMutation({
+      mutationFn: transactionsService.update,
+    });
+
+  const { isPending: isRemovalPending, mutateAsync: removeTransaction } =
+    useMutation({
+      mutationFn: transactionsService.remove,
+    });
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleSubmit = handleHookFormSubmit(async (editedTransaction) => {
     try {
-      await mutateAsync({
+      await updateTransaction({
         ...editedTransaction,
         id: transaction.id,
         type: transaction.type,
@@ -78,6 +86,34 @@ export function useEditTransactionModalController(
     }
   });
 
+  async function handleDeleteTransaction() {
+    try {
+      await removeTransaction(transaction.id);
+
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      toast.success(
+        transaction.type === 'EXPENSE'
+          ? 'Despesa excluída com sucesso!'
+          : 'Receita excluída com sucesso!',
+      );
+      onClose();
+    } catch (error) {
+      toast.error(
+        transaction.type === 'EXPENSE'
+          ? 'Erro ao excluir a despesa!'
+          : 'Erro ao excluir a receita!',
+      );
+    }
+  }
+
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
   return {
     register,
     errors,
@@ -85,6 +121,11 @@ export function useEditTransactionModalController(
     handleSubmit,
     accounts,
     categories: filteredCategories,
-    isLoading: isPending,
+    isUpdatePending,
+    isDeleteModalOpen,
+    isRemovalPending,
+    handleDeleteTransaction,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
   };
 }
