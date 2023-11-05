@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Transaction } from '../../../../../app/entities/Transaction';
 import { useTransactions } from '../../../../../app/hooks/useTransactions';
 import { TransactionsFilters } from '../../../../../app/services/transactionsService/getAll';
 import { useDashboard } from '../DashboardContext/useDashboard';
@@ -13,6 +14,10 @@ export function useTransactionsController() {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
   });
+  const [isEditTransactionModalOpen, setIsEditTransactionModalOpen] =
+    useState(false);
+  const [transactionBeingEdited, setTransactionBeingEdited] =
+    useState<Transaction | null>(null);
 
   const { areValuesVisible } = useDashboard();
   const { transactions, isFetching, isInitialLoading, refetch } =
@@ -51,6 +56,16 @@ export function useTransactionsController() {
     setIsFiltersModalOpen(false);
   }
 
+  function handleOpenEditTransactionModal(transaction: Transaction) {
+    setTransactionBeingEdited(transaction);
+    setIsEditTransactionModalOpen(true);
+  }
+
+  function handleCloseEditTransactionModal() {
+    setTransactionBeingEdited(null);
+    setIsEditTransactionModalOpen(false);
+  }
+
   return {
     sliderPosition,
     setSliderPosition,
@@ -64,5 +79,9 @@ export function useTransactionsController() {
     filters,
     handleChangeFilters,
     handleApplyFilters,
+    isEditTransactionModalOpen,
+    transactionBeingEdited,
+    handleOpenEditTransactionModal,
+    handleCloseEditTransactionModal,
   };
 }

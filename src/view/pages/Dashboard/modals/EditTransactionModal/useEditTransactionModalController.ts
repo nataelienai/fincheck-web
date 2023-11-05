@@ -4,10 +4,10 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
+import { Transaction } from '../../../../../app/entities/Transaction';
 import { useBankAccounts } from '../../../../../app/hooks/useBankAccounts';
 import { useCategories } from '../../../../../app/hooks/useCategories';
 import { transactionsService } from '../../../../../app/services/transactionsService';
-import { useDashboard } from '../../components/DashboardContext/useDashboard';
 
 const schema = z.object({
   value: z.string().min(1, 'Valor é obrigatório'),
@@ -19,27 +19,23 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export function useNewTransactionModalController() {
-  const {
-    isNewTransactionModalOpen,
-    newTransactionType,
-    closeNewTransactionModal,
-  } = useDashboard();
-
+export function useEditTransactionModalController(
+  transaction: Transaction,
+  onClose: () => void,
+) {
   const {
     register,
     handleSubmit: handleHookFormSubmit,
     formState: { errors },
     control,
-    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      value: '0',
-      name: '',
-      categoryId: '',
-      bankAccountId: '',
-      date: new Date(),
+      value: String(transaction.value),
+      name: transaction.name,
+      categoryId: transaction.categoryId,
+      bankAccountId: transaction.bankAccountId,
+      date: new Date(transaction.date),
     },
   });
 
@@ -47,47 +43,42 @@ export function useNewTransactionModalController() {
   const { categories } = useCategories();
 
   const filteredCategories = useMemo(() => {
-    return categories.filter(
-      (category) => category.type === newTransactionType,
-    );
-  }, [categories, newTransactionType]);
+    return categories.filter((category) => category.type === transaction.type);
+  }, [categories, transaction.type]);
 
   const queryClient = useQueryClient();
 
   const { isPending, mutateAsync } = useMutation({
-    mutationFn: transactionsService.create,
+    mutationFn: transactionsService.update,
   });
 
-  const handleSubmit = handleHookFormSubmit(async (transaction) => {
+  const handleSubmit = handleHookFormSubmit(async (editedTransaction) => {
     try {
       await mutateAsync({
-        ...transaction,
-        value: Number(transaction.value),
-        type: newTransactionType!,
-        date: transaction.date.toISOString(),
+        ...editedTransaction,
+        id: transaction.id,
+        type: transaction.type,
+        value: Number(editedTransaction.value),
+        date: editedTransaction.date.toISOString(),
       });
 
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       toast.success(
-        newTransactionType === 'EXPENSE'
-          ? 'Despesa cadastrada com sucesso!'
-          : 'Receita cadastrada com sucesso!',
+        transaction.type === 'EXPENSE'
+          ? 'Despesa editada com sucesso!'
+          : 'Receita editada com sucesso!',
       );
-      closeNewTransactionModal();
-      reset();
+      onClose();
     } catch (error) {
       toast.error(
-        newTransactionType === 'EXPENSE'
-          ? 'Erro ao cadastrar a despesa!'
-          : 'Erro ao cadastrar a receita!',
+        transaction.type === 'EXPENSE'
+          ? 'Erro ao salvar a despesa!'
+          : 'Erro ao salvar a receita!',
       );
     }
   });
 
   return {
-    isNewTransactionModalOpen,
-    newTransactionType,
-    closeNewTransactionModal,
     register,
     errors,
     control,
