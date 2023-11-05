@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
@@ -34,15 +35,23 @@ export function useEditAccountModalController() {
     },
   });
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const queryClient = useQueryClient();
 
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: bankAccountsService.update,
-  });
+  const { isPending: isUpdatePending, mutateAsync: updateAccount } =
+    useMutation({
+      mutationFn: bankAccountsService.update,
+    });
+
+  const { isPending: isRemovalPending, mutateAsync: removeAccount } =
+    useMutation({
+      mutationFn: bankAccountsService.remove,
+    });
 
   const handleSubmit = hookFormHandleSubmit(async (editedAccount) => {
     try {
-      await mutateAsync({
+      await updateAccount({
         ...editedAccount,
         initialBalance: Number(editedAccount.initialBalance),
         id: accountBeingEdited!.id,
@@ -56,6 +65,26 @@ export function useEditAccountModalController() {
     }
   });
 
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
+  async function handleDeleteAccount() {
+    try {
+      await removeAccount(accountBeingEdited!.id);
+
+      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] });
+      toast.success('Conta excluída com sucesso!');
+      closeEditAccountModal();
+    } catch (error) {
+      toast.error('Erro ao excluir a conta!');
+    }
+  }
+
   return {
     isEditAccountModalOpen,
     closeEditAccountModal,
@@ -63,6 +92,11 @@ export function useEditAccountModalController() {
     errors,
     handleSubmit,
     control,
-    isPending,
+    isUpdatePending,
+    isRemovalPending,
+    isDeleteModalOpen,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
   };
 }

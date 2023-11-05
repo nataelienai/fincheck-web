@@ -2,9 +2,11 @@ import { Controller } from 'react-hook-form';
 import { Button } from '../../../../components/Button';
 import { ColorsDropdownInput } from '../../../../components/ColorsDropdownInput';
 import { CurrencyInput } from '../../../../components/CurrencyInput';
+import { DeleteConfirmationModal } from '../../../../components/DeleteConfirmationModal';
 import { Input } from '../../../../components/Input';
 import { Modal } from '../../../../components/Modal';
 import { Select } from '../../../../components/Select';
+import { TrashIcon } from '../../../../components/icons/TrashIcon';
 import { useEditAccountModalController } from './useEditAccountModalController';
 
 export function EditAccountModal() {
@@ -15,14 +17,37 @@ export function EditAccountModal() {
     handleSubmit,
     register,
     control,
-    isPending,
+    isUpdatePending,
+    isRemovalPending,
+    isDeleteModalOpen,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
   } = useEditAccountModalController();
+
+  if (isDeleteModalOpen) {
+    return (
+      <DeleteConfirmationModal
+        onConfirm={handleDeleteAccount}
+        onCancel={handleCloseDeleteModal}
+        title="Tem certeza que deseja excluir esta conta?"
+        description="Ao excluir a conta, também serão excluídos todos os registros de
+      receita e despesa relacionados."
+        isLoading={isRemovalPending}
+      />
+    );
+  }
 
   return (
     <Modal
       title="Editar Conta"
       open={isEditAccountModalOpen}
       onClose={closeEditAccountModal}
+      rightAction={
+        <button className="w-12 h-12 p-3" onClick={handleOpenDeleteModal}>
+          <TrashIcon className="w-6 h-6 text-red-900" />
+        </button>
+      }
     >
       <form onSubmit={handleSubmit}>
         <div>
@@ -95,7 +120,11 @@ export function EditAccountModal() {
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6" isLoading={isPending}>
+        <Button
+          type="submit"
+          className="w-full mt-6"
+          isLoading={isUpdatePending}
+        >
           Salvar
         </Button>
       </form>
