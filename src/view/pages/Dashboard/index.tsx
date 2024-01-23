@@ -24,10 +24,10 @@ export function Dashboard() {
             </header>
 
             <main className="flex-1 flex flex-col lg:flex-row gap-4 max-h-full">
-              <div className="w-full lg:w-1/2">
+              <div className="w-full lg:w-[calc(50%-8px)]">
                 <Accounts />
               </div>
-              <div className="w-full lg:w-1/2">
+              <div className="w-full lg:w-[calc(50%-8px)]">
                 <Transactions />
               </div>
             </main>
