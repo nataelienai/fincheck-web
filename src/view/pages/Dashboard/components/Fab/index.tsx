@@ -21,7 +21,7 @@ export function Fab() {
           </button>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content>
+        <DropdownMenu.Content className="mr-4 mb-4">
           <DropdownMenu.Item
             className="gap-2"
             onSelect={() => openNewTransactionModal('EXPENSE')}
