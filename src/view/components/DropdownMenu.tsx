@@ -1,8 +1,22 @@
 import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu';
 import { cn } from '../../app/utils/cn';
 
-function DropdownMenuRoot({ children }: { children: React.ReactNode }) {
-  return <RadixDropdownMenu.Root>{children}</RadixDropdownMenu.Root>;
+interface DropdownMenuRootProps {
+  children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+function DropdownMenuRoot({
+  children,
+  open,
+  onOpenChange,
+}: DropdownMenuRootProps) {
+  return (
+    <RadixDropdownMenu.Root open={open} onOpenChange={onOpenChange}>
+      {children}
+    </RadixDropdownMenu.Root>
+  );
 }
 
 function DropdownMenuTrigger({ children }: { children: React.ReactNode }) {
