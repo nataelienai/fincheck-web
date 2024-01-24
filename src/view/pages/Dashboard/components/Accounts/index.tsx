@@ -94,6 +94,12 @@ export function Accounts() {
                       isEnd: swiper.isEnd,
                     });
                   }}
+                  onSlidesLengthChange={(swiper) => {
+                    setSliderPosition({
+                      isBeginning: swiper.isBeginning,
+                      isEnd: swiper.isEnd,
+                    });
+                  }}
                 >
                   <div
                     className="flex items-center justify-between mb-4"
