@@ -16,7 +16,7 @@ export function SliderNavigation({
     <>
       <div className="absolute left-0 top-0 z-10 w-20 bg-gradient-to-r from-gray-100 via-gray-100 via-40%">
         <button
-          className="py-3 pl-2.5 pr-3.5 rounded-full enabled:hover:bg-black/10 transition-colors disabled:opacity-40"
+          className="py-3 pl-2.5 pr-3.5 rounded-full enabled:hover:bg-gray-200 transition-colors disabled:opacity-40"
           onClick={() => swiper.slidePrev()}
           disabled={isBeginning}
         >
@@ -26,7 +26,7 @@ export function SliderNavigation({
 
       <div className="absolute right-0 top-0 z-10 w-20 flex justify-end bg-gradient-to-l from-gray-100 via-gray-100 via-40%">
         <button
-          className="py-3 pl-3.5 pr-2.5 rounded-full enabled:hover:bg-black/10 transition-colors disabled:opacity-40"
+          className="py-3 pl-3.5 pr-2.5 rounded-full enabled:hover:bg-gray-200 transition-colors disabled:opacity-40"
           onClick={() => swiper.slideNext()}
           disabled={isEnd}
         >

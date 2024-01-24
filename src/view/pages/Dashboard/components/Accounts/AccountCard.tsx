@@ -15,7 +15,7 @@ export function AccountCard({ account }: AccountCardProps) {
 
   return (
     <div
-      className="p-4 bg-white rounded-2xl h-[204px] flex flex-col justify-between border-b-4 border-teal-950"
+      className="p-4 bg-white rounded-2xl h-[204px] flex flex-col justify-between border-b-4 hover:bg-gray-100 transition-colors"
       style={{ borderColor: color }}
       role="button"
       onClick={() => openEditAccountModal(account)}

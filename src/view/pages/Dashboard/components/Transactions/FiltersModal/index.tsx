@@ -39,7 +39,7 @@ export function FiltersModal({
               key={account.id}
               onClick={() => handleSelectBankAccount(account.id)}
               className={cn(
-                'p-2 rounded-2xl w-full text-left text-gray-800 hover:bg-gray-50 transition-colors',
+                'p-2 rounded-2xl w-full text-left text-gray-800 hover:bg-gray-100 transition-colors',
                 account.id === selectedBankAccountId && '!bg-gray-200',
               )}
             >
@@ -54,7 +54,7 @@ export function FiltersModal({
 
         <div className="mt-2 w-52 flex items-center justify-between">
           <button
-            className="w-12 h-12 flex items-center justify-center"
+            className="w-12 h-12 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
             onClick={() => handleChangeYear(-1)}
           >
             <ChevronLeftIcon className="w-6 h-6 " />
@@ -67,7 +67,7 @@ export function FiltersModal({
           </div>
 
           <button
-            className="w-12 h-12 flex items-center justify-center"
+            className="w-12 h-12 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
             onClick={() => handleChangeYear(1)}
           >
             <ChevronRightIcon className="w-6 h-6 " />

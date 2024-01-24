@@ -67,7 +67,7 @@ function DropdownMenuItem({
   return (
     <RadixDropdownMenu.Item
       className={cn(
-        'min-h-[48px] outline-none flex items-center p-2 text-gray-800 text-sm data-[highlighted]:bg-gray-50 rounded-2xl transition-colors cursor-pointer',
+        'min-h-[48px] outline-none flex items-center p-2 text-gray-800 text-sm data-[highlighted]:bg-gray-100 rounded-2xl transition-colors cursor-pointer',
         className,
       )}
       onSelect={onSelect}

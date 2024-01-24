@@ -60,7 +60,10 @@ export function Transactions() {
                 selectedType={filters.type}
               />
 
-              <button className="p-3" onClick={handleOpenFiltersModal}>
+              <button
+                className="p-3 hover:bg-gray-200 rounded-full transition-colors"
+                onClick={handleOpenFiltersModal}
+              >
                 <FilterIcon />
               </button>
             </div>
@@ -130,7 +133,7 @@ export function Transactions() {
                 {transactions.map((transaction) => (
                   <div
                     key={transaction.id}
-                    className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4"
+                    className="bg-white p-4 rounded-2xl flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors"
                     role="button"
                     onClick={() => handleOpenEditTransactionModal(transaction)}
                   >

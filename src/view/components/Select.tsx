@@ -66,7 +66,7 @@ export function Select({
                 {options.map((option) => (
                   <RadixSelect.Item
                     key={option.value}
-                    className="p-2 text-gray-800 text-sm data-[state=checked]:font-bold outline-none data-[highlighted]:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+                    className="p-2 text-gray-800 text-sm data-[state=checked]:font-bold outline-none data-[highlighted]:bg-gray-100 rounded-lg transition-colors cursor-pointer"
                     value={option.value}
                   >
                     <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>

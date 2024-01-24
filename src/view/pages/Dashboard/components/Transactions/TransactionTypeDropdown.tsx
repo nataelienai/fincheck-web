@@ -16,7 +16,7 @@ export function TransactionTypeDropdown({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <button className="flex items-center gap-2 py-3">
+        <button className="flex items-center gap-2 p-3 hover:bg-gray-200 data-[state=open]:bg-gray-200 transition-colors rounded-full">
           {selectedType === 'EXPENSE' && <ExpensesIcon />}
           {selectedType === 'INCOME' && <IncomeIcon />}
           {selectedType === undefined && <TransactionsIcon />}

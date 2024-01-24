@@ -33,7 +33,7 @@ export function Modal({
         >
           <header className="h-12 flex items-center justify-between text-gray-800">
             <button
-              className="w-12 h-12 outline-none flex items-center justify-center"
+              className="w-12 h-12 outline-none flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
               onClick={onClose}
             >
               <Cross2Icon width="24" height="24" />
@@ -43,7 +43,7 @@ export function Modal({
               {title}
             </span>
 
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className="w-12 h-12 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors">
               {rightAction}
             </div>
           </header>

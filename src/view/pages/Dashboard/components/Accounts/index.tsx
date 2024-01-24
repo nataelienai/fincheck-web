@@ -52,7 +52,7 @@ export function Accounts() {
               </strong>
 
               <button
-                className="w-12 h-12 flex items-center justify-center"
+                className="w-12 h-12 flex items-center justify-center hover:bg-teal-800 rounded-full transition-colors"
                 onClick={toggleValuesVisibility}
               >
                 <EyeIcon open={!areValuesVisible} />
