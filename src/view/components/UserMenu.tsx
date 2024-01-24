@@ -15,7 +15,7 @@ export function UserMenu() {
         </button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className="w-32 mr-8 mt-4">
+      <DropdownMenu.Content className="w-32 mt-4" align="end">
         <DropdownMenu.Item
           className="flex items-center justify-between"
           onSelect={signout}
