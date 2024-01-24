@@ -24,6 +24,7 @@ export function Accounts() {
     openNewAccountModal,
     totalBalance,
   } = useAccountsController();
+  const slidesPerView = windowWidth > 500 ? 2.1 : 1.2;
 
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 lg:p-10 flex flex-col gap-10 lg:gap-0">
@@ -87,7 +88,7 @@ export function Accounts() {
               <div>
                 <Swiper
                   spaceBetween={16}
-                  slidesPerView={windowWidth > 500 ? 2.1 : 1.2}
+                  slidesPerView={slidesPerView}
                   onSlideChange={(swiper) => {
                     setSliderPosition({
                       isBeginning: swiper.isBeginning,
@@ -112,6 +113,7 @@ export function Accounts() {
                     <AccountsSliderNavigation
                       isBeginning={sliderPosition.isBeginning}
                       isEnd={sliderPosition.isEnd}
+                      isNeeded={accounts.length > slidesPerView}
                     />
                   </div>
 
