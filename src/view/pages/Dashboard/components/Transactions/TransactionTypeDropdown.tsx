@@ -35,7 +35,10 @@ export function TransactionTypeDropdown({
         </button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className="w-[279px] mt-2" align="start">
+      <DropdownMenu.Content
+        className="w-[279px] data-[side=bottom]:mt-2 data-[side=top]:mb-2"
+        align="start"
+      >
         <DropdownMenu.Item
           className="gap-2"
           onSelect={() => onSelect('INCOME')}
