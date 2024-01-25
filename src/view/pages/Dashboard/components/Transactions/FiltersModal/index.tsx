@@ -28,6 +28,8 @@ export function FiltersModal({
 
   return (
     <Modal.Root open={open} onClose={onClose}>
+      <Modal.Overlay />
+
       <Modal.Content title="Filtros" onClose={onClose}>
         <div>
           <span className="text-lg leading-6 font-bold tracking-[-1px] text-gray-800">

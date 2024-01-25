@@ -12,18 +12,24 @@ interface ModalRootProps {
 function ModalRoot({ open, children, onClose }: ModalRootProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Portal>
-        <Dialog.Overlay
-          className={cn(
-            'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 data-[state=open]:animate-overlay-show',
-          )}
-        />
-
-        {children}
-      </Dialog.Portal>
+      <Dialog.Portal>{children}</Dialog.Portal>
     </Dialog.Root>
   );
 }
+
+const ModalOverlay = React.forwardRef(function ModalOverlay(
+  _props: unknown,
+  ref: React.ForwardedRef<HTMLDivElement>,
+) {
+  return (
+    <Dialog.Overlay
+      className={cn(
+        'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 data-[state=open]:animate-overlay-show',
+      )}
+      ref={ref}
+    />
+  );
+});
 
 interface ModalContentProps {
   title: string;
@@ -57,7 +63,8 @@ const ModalContent = React.forwardRef(function ModalContent(
 
         <div
           className={cn(
-            'w-12 h-12 flex items-center justify-center rounded-full transition-colors hover:bg-gray-100',
+            'w-12 h-12 flex items-center justify-center rounded-full transition-colors',
+            rightAction && 'hover:bg-gray-100',
           )}
         >
           {rightAction}
@@ -71,5 +78,6 @@ const ModalContent = React.forwardRef(function ModalContent(
 
 export const Modal = {
   Root: ModalRoot,
+  Overlay: ModalOverlay,
   Content: ModalContent,
 };

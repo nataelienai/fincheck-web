@@ -28,6 +28,8 @@ export function NewTransactionModal() {
       open={isNewTransactionModalOpen}
       onClose={closeNewTransactionModal}
     >
+      <Modal.Overlay />
+
       <Modal.Content
         title={isExpense ? 'Nova Despesa' : 'Nova Receita'}
         onClose={closeNewTransactionModal}

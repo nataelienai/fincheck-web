@@ -20,6 +20,8 @@ export function NewAccountModal() {
 
   return (
     <Modal.Root open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
+      <Modal.Overlay />
+
       <Modal.Content title="Nova Conta" onClose={closeNewAccountModal}>
         <form onSubmit={handleSubmit}>
           <div>
