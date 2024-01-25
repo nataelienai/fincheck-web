@@ -104,15 +104,15 @@ export function Transactions() {
             </div>
           </header>
 
-          <div className="mt-4 space-y-2 flex-1 overflow-y-auto">
+          <div className="mt-4 flex-1 overflow-y-auto">
             {isLoadingTransactions && (
-              <div className="flex flex-col justify-center items-center h-full">
+              <div className="flex flex-col justify-center items-center min-h-64 lg:min-h-0 lg:h-full">
                 <Spinner />
               </div>
             )}
 
             {!hasTransactions && !isLoadingTransactions && (
-              <div className="flex flex-col justify-center items-center h-full">
+              <div className="flex flex-col justify-center items-center min-h-64 lg:min-h-0 lg:h-full">
                 <img src={emptyStateIllustration} alt="Estado vazio" />
                 <p className="text-gray-700">
                   Não encontramos nenhuma transação!
@@ -121,7 +121,7 @@ export function Transactions() {
             )}
 
             {hasTransactions && !isLoadingTransactions && (
-              <>
+              <div className="pb-10 lg:pb-0 space-y-2">
                 {transactionBeingEdited && (
                   <EditTransactionModal
                     open={isEditTransactionModalOpen}
@@ -171,7 +171,7 @@ export function Transactions() {
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             )}
           </div>
         </>
