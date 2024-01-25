@@ -18,6 +18,10 @@ export function NewAccountModal() {
     isPending,
   } = useNewAccountModalController();
 
+  const hasErrors = Boolean(
+    errors.initialBalance || errors.name || errors.type || errors.color,
+  );
+
   return (
     <Modal.Root open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
       <Modal.Overlay />
@@ -96,7 +100,12 @@ export function NewAccountModal() {
             />
           </div>
 
-          <Button type="submit" className="w-full mt-6" isLoading={isPending}>
+          <Button
+            type="submit"
+            className="w-full mt-6"
+            isLoading={isPending}
+            disabled={hasErrors}
+          >
             Criar
           </Button>
         </form>

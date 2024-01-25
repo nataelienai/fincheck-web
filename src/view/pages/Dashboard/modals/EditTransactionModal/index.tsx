@@ -38,6 +38,14 @@ export function EditTransactionModal({
 
   const isExpense = transaction.type === 'EXPENSE';
 
+  const hasErrors = Boolean(
+    errors.value ||
+      errors.name ||
+      errors.categoryId ||
+      errors.bankAccountId ||
+      errors.date,
+  );
+
   return (
     <>
       {isDeleteModalOpen && (
@@ -148,6 +156,7 @@ export function EditTransactionModal({
                 type="submit"
                 className="w-full mt-6"
                 isLoading={isUpdatePending}
+                disabled={hasErrors}
               >
                 Salvar
               </Button>

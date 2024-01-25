@@ -23,6 +23,14 @@ export function NewTransactionModal() {
 
   const isExpense = newTransactionType === 'EXPENSE';
 
+  const hasErrors = Boolean(
+    errors.value ||
+      errors.name ||
+      errors.categoryId ||
+      errors.bankAccountId ||
+      errors.date,
+  );
+
   return (
     <Modal.Root
       open={isNewTransactionModalOpen}
@@ -112,7 +120,12 @@ export function NewTransactionModal() {
             />
           </div>
 
-          <Button type="submit" className="w-full mt-6" isLoading={isLoading}>
+          <Button
+            type="submit"
+            className="w-full mt-6"
+            isLoading={isLoading}
+            disabled={hasErrors}
+          >
             Criar
           </Button>
         </form>

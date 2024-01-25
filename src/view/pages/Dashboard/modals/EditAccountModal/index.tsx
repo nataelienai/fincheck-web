@@ -25,6 +25,10 @@ export function EditAccountModal() {
     handleDeleteAccount,
   } = useEditAccountModalController();
 
+  const hasErrors = Boolean(
+    errors.initialBalance || errors.name || errors.type || errors.color,
+  );
+
   return (
     <>
       {isDeleteModalOpen && (
@@ -128,6 +132,7 @@ export function EditAccountModal() {
                 type="submit"
                 className="w-full mt-6"
                 isLoading={isUpdatePending}
+                disabled={hasErrors}
               >
                 Salvar
               </Button>
