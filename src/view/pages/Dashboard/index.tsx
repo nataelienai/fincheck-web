@@ -27,11 +27,11 @@ export function Dashboard() {
               <UserMenu />
             </header>
 
-            <main className="flex-1 flex flex-col lg:flex-row gap-4 h-[calc(100%-64px)]">
+            <main className="flex-1 flex flex-col lg:flex-row gap-8 lg:gap-4 h-[calc(100%-64px)]">
               <div className="w-full lg:w-[calc(50%-8px)]">
                 <Accounts />
               </div>
-              <div className="w-full lg:w-[calc(50%-8px)]">
+              <div className="w-full lg:w-[calc(50%-8px)] pb-4 lg:pb-0">
                 <Transactions />
               </div>
             </main>
