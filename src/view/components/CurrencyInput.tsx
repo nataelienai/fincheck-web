@@ -14,6 +14,7 @@ export function CurrencyInput({ error, value, onChange }: CurrencyInputProps) {
       <NumericFormat
         thousandSeparator="."
         decimalSeparator=","
+        allowNegative={false}
         className={cn(
           'w-full text-gray-800 text-[32px] font-bold tracking-[-1px] outline-none',
           error && 'text-red-900',
