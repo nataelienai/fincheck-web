@@ -114,7 +114,7 @@ export function Transactions() {
             {!hasTransactions && !isLoadingTransactions && (
               <div className="flex flex-col justify-center items-center min-h-64 lg:min-h-0 lg:h-full">
                 <img src={emptyStateIllustration} alt="Estado vazio" />
-                <p className="text-gray-700">
+                <p className="text-gray-700 text-center">
                   Não encontramos nenhuma transação!
                 </p>
               </div>
