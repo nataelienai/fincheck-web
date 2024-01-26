@@ -10,7 +10,10 @@ import { transactionsService } from '../../../../../app/services/transactionsSer
 import { useDashboard } from '../../components/DashboardContext/useDashboard';
 
 const schema = z.object({
-  value: z.string().min(1, 'Valor é obrigatório'),
+  value: z
+    .string()
+    .min(1, 'Valor é obrigatório')
+    .refine((value) => Number(value) > 0, 'Valor deve ser positivo'),
   name: z.string().min(1, 'Nome é obrigatório'),
   categoryId: z.string().min(1, 'Categoria é obrigatória'),
   bankAccountId: z.string().min(1, 'Conta é obrigatória'),
